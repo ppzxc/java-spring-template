@@ -1,4 +1,4 @@
-package io.github.ppzxc.boilerplate.shared.security;
+package io.github.ppzxc.boilerplate.shared;
 
 public final class AccessDeniedException extends RuntimeException {
 

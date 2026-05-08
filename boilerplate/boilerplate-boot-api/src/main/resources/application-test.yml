@@ -1,0 +1,8 @@
+spring:
+  docker:
+    compose:
+      enabled: false
+management:
+  tracing:
+    sampling:
+      probability: 0.0

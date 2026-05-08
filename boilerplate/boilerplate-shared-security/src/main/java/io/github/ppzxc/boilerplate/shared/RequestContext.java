@@ -1,4 +1,4 @@
-package io.github.ppzxc.boilerplate.shared.security;
+package io.github.ppzxc.boilerplate.shared;
 
 import java.util.Objects;
 import java.util.Set;

@@ -132,12 +132,14 @@ class ArchitectureTest {
         .check(classes);
   }
 
-  // ── shared.security → Spring 의존 금지 ──────────────────────────────
+  // ── shared(security 타입) → Spring 의존 금지 ────────────────────────
   @Test
-  void shared_security_Spring_의존_금지() {
+  void shared_security_타입_Spring_의존_금지() {
     noClasses()
         .that()
-        .resideInAPackage("..shared.security..")
+        .resideInAPackage("io.github.ppzxc.boilerplate.shared")
+        .and()
+        .haveSimpleNameNotEndingWith("IntegrationEvent")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("org.springframework..")
@@ -152,7 +154,7 @@ class ArchitectureTest {
         .resideInAPackage("..domain..")
         .should()
         .dependOnClassesThat()
-        .haveFullyQualifiedName("io.github.ppzxc.boilerplate.shared.security.RequestScope")
+        .haveFullyQualifiedName("io.github.ppzxc.boilerplate.shared.RequestScope")
         .check(classes);
   }
 

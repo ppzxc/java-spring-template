@@ -1,0 +1,60 @@
+security:
+  jwt:
+    jwk-set-uri: ${JWT_JWK_SET_URI:}
+    hmac-secret: ${JWT_HMAC_SECRET:dev-secret-change-me-in-production-min-256-bits}
+
+spring:
+  application:
+    name: boilerplate
+  docker:
+    compose:
+      enabled: true
+      lifecycle-management: start-and-stop
+      file: ./docker-compose.yml
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/boilerplate}
+    username: ${DATABASE_USERNAME:boilerplate}
+    password: ${DATABASE_PASSWORD:boilerplate}
+    driver-class-name: org.postgresql.Driver
+  jooq:
+    sql-dialect: postgres
+  flyway:
+    enabled: true
+  modulith:
+    events:
+      jdbc-schema-initialization:
+        enabled: false  # Flyway V2 마이그레이션으로 관리 (V2__create_event_publication.sql)
+      completion-mode: delete
+    republish-outstanding-events-on-restart: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    metrics:
+      export:
+        url: ${OTLP_METRICS_URL:http://localhost:4318/v1/metrics}
+    tracing:
+      export:
+        url: ${OTLP_TRACING_URL:http://localhost:4318/v1/traces}
+    logging:
+      export:
+        url: ${OTLP_LOGGING_URL:http://localhost:4318/v1/logs}
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  observations:
+    annotations:
+      enabled: true
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+
+logging:
+  structured:
+    format:
+      console: ecs
