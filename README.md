@@ -18,12 +18,16 @@
 
 ```
 boilerplate/
-  boilerplate-domain/          # 순수 Java, 외부 의존 제로 (D-1)
-  boilerplate-application/     # domain만 의존, Port/UseCase/Service
   boilerplate-boot-api/        # 전체 조립, Controller, Adapter, TX 프록시
+  boilerplate-shared-event/    # BC 간 Integration Event (Published Language)
+  boilerplate-shared-security/ # 공통 보안 설정
+  boilerplate-test-support/    # 테스트 픽스처 공용 인프라
+  identity/                    # Identity BC (Core Domain)
+  notification/                # Notification BC (Supporting Domain)
+  audit/                       # Audit BC (Supporting Domain)
 ```
 
-신규 BC 추가 패턴: `boilerplate-{bc}-{domain|application|adapter-input-api|adapter-output-persist|configuration}`
+각 BC 모듈 패턴: `boilerplate-{bc}-{domain|application|adapter-input-api|adapter-output-persist|configuration}`
 
 ## 빠른 시작
 

@@ -5,7 +5,6 @@ plugins {
 }
 
 dependencies {
-  implementation(project(":boilerplate-application"))
   implementation(project(":boilerplate-shared-event"))
   implementation(project(":boilerplate-shared-security"))
   implementation(project(":boilerplate-identity-configuration"))

@@ -15,9 +15,13 @@
 ## 모듈 구조
 
 현재 모듈:
-- `boilerplate-domain`: 순수 Java. 외부 의존 제로. Aggregate, VO, Domain Event 포함. Port 없음.
-- `boilerplate-application`: domain만 의존. Input Port, Output Port, UseCase Service.
 - `boilerplate-boot-api`: 전체 조립. Controller, PersistenceAdapter, TX 프록시.
+- `boilerplate-shared-event`: BC 간 Integration Event 계약 (Published Language). 순수 Java record.
+- `boilerplate-shared-security`: 공통 보안 설정 (JWT Filter 등).
+- `boilerplate-test-support`: 테스트 픽스처 공용 인프라 (DomainTestBase, Testcontainers Singleton 등).
+- `identity/`: Identity BC 5개 모듈 (Core Domain)
+- `notification/`: Notification BC 5개 모듈 (Supporting Domain)
+- `audit/`: Audit BC 5개 모듈 (Supporting Domain)
 
 신규 BC 추가 시 모듈 패턴: `boilerplate-{bc}-{layer}`
 - `boilerplate-{bc}-domain`
