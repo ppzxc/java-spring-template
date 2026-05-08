@@ -7,10 +7,10 @@ public record RecordUserRegisteredAuditCommand(
     String subjectUserId, String userName, String email, String occurredAt) {
 
   public RecordUserRegisteredAuditCommand {
-    Objects.requireNonNull(subjectUserId, "subjectUserId must not be blank");
-    Objects.requireNonNull(userName, "userName must not be blank");
-    Objects.requireNonNull(email, "email must not be blank");
-    Objects.requireNonNull(occurredAt, "occurredAt must not be blank");
+    Objects.requireNonNull(subjectUserId, "subjectUserId must not be null");
+    Objects.requireNonNull(userName, "userName must not be null");
+    Objects.requireNonNull(email, "email must not be null");
+    Objects.requireNonNull(occurredAt, "occurredAt must not be null");
     if (subjectUserId.isBlank()) {
       throw new IllegalArgumentException("subjectUserId must not be blank");
     }
