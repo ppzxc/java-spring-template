@@ -6,7 +6,21 @@ plugins {
 
 dependencies {
   implementation(project(":boilerplate-application"))
+  implementation(project(":boilerplate-shared-event"))
+  implementation(project(":boilerplate-shared-security"))
+  implementation(project(":boilerplate-identity-configuration"))
   implementation(libs.org.springframework.modulith.starter.jdbc)
   implementation(libs.org.springframework.modulith.events.api)
+  implementation(libs.org.springframework.boot.starter.web)
+  implementation(libs.org.springframework.boot.starter.actuator)
+  implementation(libs.org.springframework.boot.starter.flyway)
+  implementation(libs.org.springframework.boot.starter.security)
+  implementation(libs.org.springframework.boot.starter.oauth2.resource.server)
+  implementation(libs.org.springframework.boot.starter.opentelemetry)
+  developmentOnly(libs.org.springframework.boot.docker.compose)
+  runtimeOnly(libs.org.flywaydb.flyway.database.postgresql)
   runtimeOnly(libs.org.postgresql.postgresql)
+  testImplementation(libs.org.springframework.modulith.core)
+  testImplementation(libs.org.springframework.security.test)
+  testImplementation(project(":boilerplate-test-support"))
 }
