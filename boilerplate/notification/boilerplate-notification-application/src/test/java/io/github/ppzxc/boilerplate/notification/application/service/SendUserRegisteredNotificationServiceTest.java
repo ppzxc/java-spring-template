@@ -20,8 +20,7 @@ import org.junit.jupiter.api.Test;
 class SendUserRegisteredNotificationServiceTest {
 
   private final SaveNotificationPort savePort = mock(SaveNotificationPort.class);
-  private final Clock clock =
-      Clock.fixed(Instant.parse("2026-01-01T00:00:00Z"), ZoneOffset.UTC);
+  private final Clock clock = Clock.fixed(Instant.parse("2026-01-01T00:00:00Z"), ZoneOffset.UTC);
 
   private final SendUserRegisteredNotificationService sut =
       new SendUserRegisteredNotificationService(savePort, clock);

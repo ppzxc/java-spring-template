@@ -24,4 +24,5 @@ dependencies {
   testImplementation(libs.org.springframework.modulith.core)
   testImplementation(libs.org.springframework.security.test)
   testImplementation(project(":boilerplate-test-support"))
+  testImplementation(libs.org.awaitility)
 }

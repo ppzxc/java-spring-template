@@ -46,7 +46,12 @@ public final class Notification {
     Objects.requireNonNull(content, "NotificationContent must not be null");
     Objects.requireNonNull(occurredAt, "occurredAt must not be null");
     return new Notification(
-        NotificationId.generate(), recipientUserId, channel, NotificationStatus.PENDING, content, 0L);
+        NotificationId.generate(),
+        recipientUserId,
+        channel,
+        NotificationStatus.PENDING,
+        content,
+        0L);
   }
 
   public static Notification reconstitute(

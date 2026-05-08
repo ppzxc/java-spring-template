@@ -63,3 +63,7 @@ sourceSets {
 tasks.named("compileJava") {
   dependsOn("jooqCodegen")
 }
+
+tasks.named("spotlessJava") {
+  dependsOn("jooqCodegen")
+}

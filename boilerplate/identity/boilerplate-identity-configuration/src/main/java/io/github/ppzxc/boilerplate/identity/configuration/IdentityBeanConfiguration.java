@@ -14,6 +14,7 @@ import java.time.Clock;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
@@ -22,6 +23,7 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
 class IdentityBeanConfiguration {
 
   @Bean
+  @Primary
   Clock identityClock() {
     return Clock.systemUTC();
   }

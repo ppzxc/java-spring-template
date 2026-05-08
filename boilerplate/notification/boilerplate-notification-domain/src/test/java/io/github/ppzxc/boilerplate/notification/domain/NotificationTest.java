@@ -45,10 +45,7 @@ class NotificationTest extends DomainTestBase {
     assertThatThrownBy(
             () ->
                 Notification.create(
-                    null,
-                    NotificationChannel.EMAIL,
-                    new NotificationContent("제목", "본문"),
-                    NOW))
+                    null, NotificationChannel.EMAIL, new NotificationContent("제목", "본문"), NOW))
         .isInstanceOf(NullPointerException.class);
   }
 

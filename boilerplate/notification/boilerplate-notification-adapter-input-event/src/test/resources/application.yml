@@ -1,0 +1,7 @@
+spring:
+  modulith:
+    events:
+      jdbc-schema-initialization:
+        enabled: true
+      completion-mode: delete
+    republish-outstanding-events-on-restart: false

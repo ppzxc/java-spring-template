@@ -12,5 +12,10 @@
 | `boilerplate-identity-adapter-input-api` | Identity | Adapter-In | REST Controller, Request/Response DTO |
 | `boilerplate-identity-adapter-output-persist` | Identity | Adapter-Out | jOOQ PersistenceAdapter, QueryAdapter, Mapper |
 | `boilerplate-identity-configuration` | Identity | Configuration | Bean 등록, TX 프록시, EventTranslator |
+| `boilerplate-notification-domain` | Notification | Domain | Aggregate(Notification), VO, Event, Exception — 순수 Java |
+| `boilerplate-notification-application` | Notification | Application | Port(Load/Save/Query), UseCase, Command/Result |
+| `boilerplate-notification-adapter-input-event` | Notification | Adapter-In | `@ApplicationModuleListener` 이벤트 핸들러(IdentityUserEventHandler) |
+| `boilerplate-notification-adapter-output-persist` | Notification | Adapter-Out | jOOQ PersistenceAdapter, QueryAdapter, Mapper |
+| `boilerplate-notification-configuration` | Notification | Configuration | Bean 등록, TX 프록시 |
 | `boilerplate-shared-event` | Cross-BC | Published Language | BC 간 Integration Event 계약 — 순수 Java record |
 | `boilerplate-boot-api` | All | Boot | Spring Boot 진입점, 전체 조립 |

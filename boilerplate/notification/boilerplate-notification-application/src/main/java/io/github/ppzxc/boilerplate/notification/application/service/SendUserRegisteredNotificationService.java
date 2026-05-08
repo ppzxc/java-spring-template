@@ -12,7 +12,8 @@ import java.time.Clock;
 import java.util.Objects;
 import java.util.UUID;
 
-public class SendUserRegisteredNotificationService implements SendUserRegisteredNotificationUseCase {
+public class SendUserRegisteredNotificationService
+    implements SendUserRegisteredNotificationUseCase {
 
   private final SaveNotificationPort savePort;
   private final Clock clock;
@@ -29,8 +30,7 @@ public class SendUserRegisteredNotificationService implements SendUserRegistered
     var recipientUserId = new RecipientUserId(UUID.fromString(command.recipientUserId()));
     var content =
         new NotificationContent(
-            command.userName() + " 님, 회원가입을 환영합니다!",
-            command.email() + " 계정으로 등록이 완료되었습니다.");
+            command.userName() + " 님, 회원가입을 환영합니다!", command.email() + " 계정으로 등록이 완료되었습니다.");
 
     var notification =
         Notification.create(recipientUserId, NotificationChannel.EMAIL, content, clock.instant());

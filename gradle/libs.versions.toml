@@ -72,6 +72,7 @@ org-springframework-security-test = { group = "org.springframework.security", na
 org-springframework-modulith-starter-jdbc = { group = "org.springframework.modulith", name = "spring-modulith-starter-jdbc", version.ref = "org-springframework-modulith" }
 org-springframework-modulith-events-api = { group = "org.springframework.modulith", name = "spring-modulith-events-api", version.ref = "org-springframework-modulith" }
 org-springframework-modulith-core = { group = "org.springframework.modulith", name = "spring-modulith-core", version.ref = "org-springframework-modulith" }
+org-springframework-modulith-test = { group = "org.springframework.modulith", name = "spring-modulith-test", version.ref = "org-springframework-modulith" }
 
 # observability
 io-micrometer-tracing-bridge-otel = { group = "io.micrometer", name = "micrometer-tracing-bridge-otel" }
@@ -96,6 +97,7 @@ io-grpc-protoc-gen-grpc-java = { group = "io.grpc", name = "protoc-gen-grpc-java
 
 # jooq
 org-springframework-boot-starter-jooq = { group = "org.springframework.boot", name = "spring-boot-starter-jooq" }
+org-springframework-boot-starter-jdbc = { group = "org.springframework.boot", name = "spring-boot-starter-jdbc" }
 org-jooq-meta-extensions = { group = "org.jooq", name = "jooq-meta-extensions", version.ref = "org-jooq-codegen-gradle" }
 
 # database

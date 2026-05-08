@@ -89,8 +89,9 @@ class NotificationPersistenceAdapterTest {
 
   @Test
   void findById_존재하지않으면_empty() {
-    var result = adapter.findById(
-        new io.github.ppzxc.boilerplate.notification.domain.NotificationId(UUID.randomUUID()));
+    var result =
+        adapter.findById(
+            new io.github.ppzxc.boilerplate.notification.domain.NotificationId(UUID.randomUUID()));
     assertThat(result).isEmpty();
   }
 }

@@ -19,8 +19,7 @@ public class NotificationPersistenceAdapter implements LoadNotificationPort, Sav
   private final DSLContext dsl;
   private final ApplicationEventPublisher eventPublisher;
 
-  public NotificationPersistenceAdapter(
-      DSLContext dsl, ApplicationEventPublisher eventPublisher) {
+  public NotificationPersistenceAdapter(DSLContext dsl, ApplicationEventPublisher eventPublisher) {
     this.dsl = Objects.requireNonNull(dsl, "dsl must not be null");
     this.eventPublisher = Objects.requireNonNull(eventPublisher, "eventPublisher must not be null");
   }
