@@ -5,6 +5,7 @@ org-springframework-modulith = "2.0.1"
 com-diffplug-spotless = "8.4.0"
 org-openrewrite-rewrite = "7.30.0"
 com-fizzpod-lefthook = "0.4.0"
+com-google-cloud-tools-jib = "3.4.4"
 net-ltgt-errorprone = "5.1.0"
 com-google-protobuf-plugin = "0.9.6"
 
@@ -41,6 +42,7 @@ io-github-springwolf = "1.12.0"
 io-grpc = "1.80.0"
 com-google-protobuf = "4.34.1"
 io-github-resilience4j = "2.2.0"
+io-jsonwebtoken-jjwt = "0.12.6"
 net-jqwik = "1.9.2"
 info-solidsoft-pitest = "1.19.0"
 spring-cloud-contract = "5.0.2"
@@ -56,6 +58,9 @@ org-springframework-boot-starter-test = { group = "org.springframework.boot", na
 # spring boot (adapter-specific)
 org-springframework-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
 org-springframework-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
+org-springframework-boot-starter-oauth2-resource-server = { group = "org.springframework.boot", name = "spring-boot-starter-oauth2-resource-server" }
+org-springframework-boot-starter-opentelemetry = { group = "org.springframework.boot", name = "spring-boot-starter-opentelemetry" }
+org-springframework-boot-docker-compose = { group = "org.springframework.boot", name = "spring-boot-docker-compose" }
 org-springframework-boot-starter-websocket = { group = "org.springframework.boot", name = "spring-boot-starter-websocket" }
 org-springframework-boot-starter-cache = { group = "org.springframework.boot", name = "spring-boot-starter-cache" }
 com-github-ben-manes-caffeine = { group = "com.github.ben-manes.caffeine", name = "caffeine" }
@@ -66,10 +71,16 @@ org-springframework-security-test = { group = "org.springframework.security", na
 # spring modulith
 org-springframework-modulith-starter-jdbc = { group = "org.springframework.modulith", name = "spring-modulith-starter-jdbc", version.ref = "org-springframework-modulith" }
 org-springframework-modulith-events-api = { group = "org.springframework.modulith", name = "spring-modulith-events-api", version.ref = "org-springframework-modulith" }
+org-springframework-modulith-core = { group = "org.springframework.modulith", name = "spring-modulith-core", version.ref = "org-springframework-modulith" }
 
 # observability
 io-micrometer-tracing-bridge-otel = { group = "io.micrometer", name = "micrometer-tracing-bridge-otel" }
 io-opentelemetry-exporter-otlp = { group = "io.opentelemetry", name = "opentelemetry-exporter-otlp" }
+
+# jwt (Phase 6 IDP 토큰 발급 선행 준비 — 본 Phase 의존 미사용)
+io-jsonwebtoken-jjwt-api = { group = "io.jsonwebtoken", name = "jjwt-api", version.ref = "io-jsonwebtoken-jjwt" }
+io-jsonwebtoken-jjwt-impl = { group = "io.jsonwebtoken", name = "jjwt-impl", version.ref = "io-jsonwebtoken-jjwt" }
+io-jsonwebtoken-jjwt-jackson = { group = "io.jsonwebtoken", name = "jjwt-jackson", version.ref = "io-jsonwebtoken-jjwt" }
 
 # api documentation
 org-springdoc-openapi-starter-webmvc-api = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-api", version.ref = "org-springdoc-openapi" }
@@ -146,6 +157,7 @@ org-openrewrite-recipe-spring = { group = "org.openrewrite.recipe", name = "rewr
 
 [plugins]
 org-springframework-boot = { id = "org.springframework.boot", version.ref = "org-springframework-boot" }
+com-google-cloud-tools-jib = { id = "com.google.cloud.tools.jib", version.ref = "com-google-cloud-tools-jib" }
 com-diffplug-spotless = { id = "com.diffplug.spotless", version.ref = "com-diffplug-spotless" }
 org-openrewrite-rewrite = { id = "org.openrewrite.rewrite", version.ref = "org-openrewrite-rewrite" }
 com-fizzpod-lefthook = { id = "com.fizzpod.lefthook", version.ref = "com-fizzpod-lefthook" }
