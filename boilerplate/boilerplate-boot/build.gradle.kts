@@ -11,8 +11,6 @@ tasks.withType<Test>().configureEach {
 dependencies {
   implementation(project(":boilerplate-shared-event"))
   implementation(project(":boilerplate-shared-security"))
-  implementation(project(":boilerplate-identity-domain"))
-  implementation(project(":boilerplate-identity-application"))
   implementation(project(":boilerplate-identity-configuration"))
   implementation(project(":boilerplate-notification-configuration"))
   implementation(project(":boilerplate-audit-configuration"))
@@ -29,6 +27,8 @@ dependencies {
   runtimeOnly(libs.org.postgresql.postgresql)
   testImplementation(libs.org.springframework.modulith.core)
   testImplementation(libs.org.springframework.modulith.test)
+  testImplementation(project(":boilerplate-identity-domain"))
+  testImplementation(project(":boilerplate-identity-application"))
   testImplementation(libs.org.springframework.security.test)
   testImplementation(project(":boilerplate-test-support"))
   testImplementation(libs.org.awaitility)

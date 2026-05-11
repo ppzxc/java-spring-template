@@ -49,6 +49,18 @@ class IdentityExceptionHandler {
     return p;
   }
 
+  @ExceptionHandler(UserException.InvalidCredentialException.class)
+  ProblemDetail handleInvalidCredential(
+      UserException.InvalidCredentialException ex, HttpServletRequest req) {
+    return problem(HttpStatus.UNAUTHORIZED, "Unauthorized", "INVALID_CREDENTIAL", msg(ex), req);
+  }
+
+  @ExceptionHandler(UserException.IneligibleStatusException.class)
+  ProblemDetail handleIneligibleStatus(
+      UserException.IneligibleStatusException ex, HttpServletRequest req) {
+    return problem(HttpStatus.FORBIDDEN, "Forbidden", "USER_STATUS_INELIGIBLE", msg(ex), req);
+  }
+
   @ExceptionHandler(UserException.NotFoundException.class)
   ProblemDetail handleNotFound(UserException.NotFoundException ex, HttpServletRequest req) {
     return problem(HttpStatus.NOT_FOUND, "User Not Found", "USER_NOT_FOUND", msg(ex), req);
