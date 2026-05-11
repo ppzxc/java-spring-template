@@ -258,6 +258,7 @@ public abstract class AdapterTestBase {
 ## 8. Lefthook (로컬 Git Hooks)
 
 Lefthook은 Git hooks 관리자. CI 전 로컬에서 품질 검사를 실행하여 위반 코드 커밋/푸시 차단.
+Lefthook의 목적은 "빠른 로컬 차단". CI(`cicd.md §1`)가 동일 검사를 다시 수행함.
 
 ```kotlin
 // build.gradle.kts
@@ -266,26 +267,52 @@ plugins {
 }
 ```
 
+**주요 구성 패턴 (실제 `lefthook.yml` 기준)**:
+
 ```yaml
-# lefthook.yml
+# lefthook.yml — 핵심 패턴
+min_version: 1.7.0
+assert_lefthook_installed: true
+
 pre-commit:
+  parallel: true                      # job 동시 실행
   jobs:
     - name: spotless-check
-      run: ./gradlew spotlessCheck
+      glob: "*.{java,kt,kts}"
+      run: ./gradlew spotlessCheck    # --no-daemon 불필요 (로컬은 daemon ON)
+      skip: [merge, rebase]
+      fail_text: "❌ 자동 수정: ./gradlew spotlessApply"
     - name: checkstyle
       glob: "*.java"
       run: ./gradlew checkstyleMain
+      skip: [merge, rebase]
+      fail_text: "❌ Checkstyle 위반. build/reports/checkstyle/main.html 확인."
+
+commit-msg:
+  jobs:
+    - name: conventional-commits
+      run: |
+        head -1 "{1}" | grep -qE \
+          '^(feat|fix|refactor|perf|chore|build|ci|docs|test|style|revert)(\(.+\))?!?: .+$' \
+          || { printf '❌ Conventional Commits 형식 위반\n예: feat(identity): JWT 로그인 구현\n'; exit 1; }
+      skip: [merge, rebase]
 
 pre-push:
+  parallel: true
   jobs:
     - name: unit-tests
-      run: ./gradlew test -x :*:adapter-*:test -x :*:configuration:test
-    - name: archunit
-      run: ./gradlew test --tests "*ArchitectureTest*"
+      run: ./gradlew test -x :boilerplate-boot:test
+      skip: [merge, rebase]
+    - name: arch-and-modulith
+      run: ./gradlew :boilerplate-boot:test --tests "*ArchitectureTest*" --tests "*ModulithStructureTest*"
+      skip: [merge, rebase]
 ```
 
+**핵심 원칙**:
 - SHOULD: `lefthook.yml`은 리포지토리에 버전 관리. 팀 전원 동일 hooks. 로컬 오버라이드는 `lefthook-local.yml`(gitignore).
 - MUST: `./gradlew lefthookInstall`로 Git hooks 자동 설치.
+- MUST: 모든 job에 `skip: [merge, rebase]` 적용하여 머지/리베이스 중 hook 발동 방지.
+- MUST NOT: `--no-daemon`을 로컬 hook에 적용한다. CI에만 적용 (§2 참조).
 
 ---
 

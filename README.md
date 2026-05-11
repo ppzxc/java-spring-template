@@ -54,6 +54,36 @@ docker compose up -d
 |--------|------|
 | `NVD_API_KEY` | OWASP Dependency-Check NVD API (없으면 스캔 느림) |
 
+## Development Setup (로컬 개발 환경)
+
+### Git Hooks (Lefthook)
+
+`./gradlew build` 실행 시 Lefthook 훅이 자동 설치됨. 이후 커밋/푸시 시 자동 검사 실행.
+
+수동 설치:
+```bash
+./gradlew lefthookInstall
+```
+
+개인 hook 추가/비활성화(팀 공유 안 됨):
+```bash
+# lefthook-local.yml 생성 (이미 .gitignore에 포함)
+printf 'pre-commit:\n  skip: true\n' > lefthook-local.yml
+```
+
+### Hook 우회 (비권장)
+
+```bash
+# pre-commit/commit-msg 건너뜀 — 긴급 상황에만 사용
+git commit --no-verify -m "..."
+# pre-push 건너뜀
+git push --no-verify
+```
+
+> ⚠️ `--no-verify`는 품질 검사를 무력화함. CI에서 재차 차단.
+
+---
+
 ## 개발 규칙
 
 - **규칙 정본**: `.claude/rules/*.md` (15개 파일)
