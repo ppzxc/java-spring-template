@@ -68,7 +68,7 @@ docker compose up -d
 개인 hook 추가/비활성화(팀 공유 안 됨):
 ```bash
 # lefthook-local.yml 생성 (이미 .gitignore에 포함)
-echo "pre-commit:\n  skip: true" > lefthook-local.yml
+printf 'pre-commit:\n  skip: true\n' > lefthook-local.yml
 ```
 
 ### Hook 우회 (비권장)

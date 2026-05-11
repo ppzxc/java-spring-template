@@ -286,6 +286,7 @@ pre-commit:
       glob: "*.java"
       run: ./gradlew checkstyleMain
       skip: [merge, rebase]
+      fail_text: "❌ Checkstyle 위반. build/reports/checkstyle/main.html 확인."
 
 commit-msg:
   jobs:
