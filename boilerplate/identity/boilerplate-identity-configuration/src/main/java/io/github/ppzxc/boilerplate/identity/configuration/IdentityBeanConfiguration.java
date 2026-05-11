@@ -1,10 +1,10 @@
 package io.github.ppzxc.boilerplate.identity.configuration;
 
-import io.github.ppzxc.boilerplate.identity.adapter.output.security.BCryptPasswordEncoderAdapter;
-import io.github.ppzxc.boilerplate.identity.adapter.output.token.JwtTokenAdapter;
 import io.github.ppzxc.boilerplate.identity.adapter.output.persist.RefreshTokenPersistenceAdapter;
 import io.github.ppzxc.boilerplate.identity.adapter.output.persist.UserPersistenceAdapter;
 import io.github.ppzxc.boilerplate.identity.adapter.output.persist.UserQueryAdapter;
+import io.github.ppzxc.boilerplate.identity.adapter.output.security.BCryptPasswordEncoderAdapter;
+import io.github.ppzxc.boilerplate.identity.adapter.output.token.JwtTokenAdapter;
 import io.github.ppzxc.boilerplate.identity.application.port.input.DeactivateUserUseCase;
 import io.github.ppzxc.boilerplate.identity.application.port.input.FindUserByIdUseCase;
 import io.github.ppzxc.boilerplate.identity.application.port.input.LoginUseCase;
@@ -41,8 +41,7 @@ class IdentityBeanConfiguration {
       RefreshTokenPersistenceAdapter refreshTokenAdapter,
       PlatformTransactionManager txManager) {
     var service =
-        new LoginService(
-            userAdapter, passwordEncoderAdapter, jwtTokenAdapter, refreshTokenAdapter);
+        new LoginService(userAdapter, passwordEncoderAdapter, jwtTokenAdapter, refreshTokenAdapter);
     return createTxProxy(service, LoginUseCase.class, txManager);
   }
 

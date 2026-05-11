@@ -2,7 +2,6 @@ package io.github.ppzxc.boilerplate.identity.application.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -51,15 +50,17 @@ class LoginServiceTest {
     var email = "test@example.com";
     var password = "password123";
     var command = new LoginCommand(email, password);
-    var user = User.create(new UserName("test"), new Email(email), new HashedPassword("hashed"), Instant.now());
+    var user =
+        User.create(
+            new UserName("test"), new Email(email), new HashedPassword("hashed"), Instant.now());
 
     when(loadUserPort.findByEmail(new Email(email))).thenReturn(Optional.of(user));
     when(passwordEncoderPort.matches(password, user.hashedPassword())).thenReturn(true);
-    
-    var tokenSet = new TokenSet(
-        new AccessToken("access"), 
-        new RefreshToken("refresh", Instant.now().plusSeconds(3600))
-    );
+
+    var tokenSet =
+        new TokenSet(
+            new AccessToken("access"),
+            new RefreshToken("refresh", Instant.now().plusSeconds(3600)));
     when(issueTokenPort.issue(user)).thenReturn(tokenSet);
 
     // when
@@ -78,7 +79,9 @@ class LoginServiceTest {
     var email = "test@example.com";
     var password = "wrong-password";
     var command = new LoginCommand(email, password);
-    var user = User.create(new UserName("test"), new Email(email), new HashedPassword("hashed"), Instant.now());
+    var user =
+        User.create(
+            new UserName("test"), new Email(email), new HashedPassword("hashed"), Instant.now());
 
     when(loadUserPort.findByEmail(new Email(email))).thenReturn(Optional.of(user));
     when(passwordEncoderPort.matches(password, user.hashedPassword())).thenReturn(false);
