@@ -41,7 +41,7 @@ fun module(name: String, path: String) {
 data class Module(val name: String, val path: String)
 
 // ── Apps ──────────────────────────────────────────────────────────────
-module(name = ":boilerplate-boot-api",  path = "boilerplate/boilerplate-boot-api")
+module(name = ":boilerplate-boot",  path = "boilerplate/boilerplate-boot")
 
 // ── Identity BC ──────────────────────────────────────────────────────
 module(name = ":boilerplate-identity-domain",              path = "boilerplate/identity/boilerplate-identity-domain")
@@ -56,7 +56,7 @@ modules.forEach {
 }
 ```
 
-### @Modulithic 어노테이션 (boilerplate-boot-api)
+### @Modulithic 어노테이션 (boilerplate-boot)
 
 ```java
 @Modulithic(
@@ -83,7 +83,7 @@ public class BoilerplateApplication {
 | `{bc}-adapter-input-api` | `{bc}-application` | `java`, `spring` |
 | `{bc}-adapter-input-event` | `{bc}-application` | `java`, `spring` |
 | `{bc}-adapter-output-persist` | `{bc}-application`, `{bc}-domain` | `java`, `spring`, `jooq` |
-| `boilerplate-boot-api` | `{bc}-configuration` (전체) | `java`, `spring`, `boot` |
+| `boilerplate-boot` | `{bc}-configuration` (전체) | `java`, `spring`, `boot` |
 
 - MUST NOT: adapter 모듈이 다른 adapter 모듈을 직접 참조한다 (AD-2).
 - MUST NOT: domain, application 모듈이 adapter 모듈을 참조한다.
@@ -107,7 +107,7 @@ dependencies {
     implementation(project(":boilerplate-identity-domain"))
 }
 
-// boilerplate-boot-api/build.gradle.kts
+// boilerplate-boot/build.gradle.kts
 label("java", "spring", "boot")
 dependencies {
     implementation(project(":boilerplate-identity-configuration"))

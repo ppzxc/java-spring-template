@@ -23,4 +23,4 @@
 | `boilerplate-audit-adapter-output-persist` | Audit | Adapter-Out | jOOQ PersistenceAdapter(INSERT-only), QueryAdapter, Mapper — audit_log 테이블 |
 | `boilerplate-audit-configuration` | Audit | Configuration | Bean 등록, TX 프록시(RecordUserRegisteredAudit/FindAuditLogsBySubject/ListRecentAuditLogs) |
 | `boilerplate-shared-event` | Cross-BC | Published Language | BC 간 Integration Event 계약 — 순수 Java record |
-| `boilerplate-boot-api` | All | Boot | Spring Boot 진입점, 전체 조립 |
+| `boilerplate-boot` | All | Boot | Spring Boot 진입점, 전체 조립 |

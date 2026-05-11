@@ -566,7 +566,7 @@ module(name = ":boilerplate-{bc}-adapter-output-persist",
        path = "boilerplate/{bc}/boilerplate-{bc}-adapter-output-persist")
 ```
 
-### Step 4: boilerplate-boot-api/build.gradle.kts에 configuration 추가
+### Step 4: boilerplate-boot/build.gradle.kts에 configuration 추가
 
 ```kotlin
 dependencies {

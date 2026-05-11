@@ -277,7 +277,7 @@ public Optional<User> findById(UserId id) {
 
 ## 8. RFC 9457 예외 처리
 
-- `@ControllerAdvice`(GlobalExceptionHandler)는 **`boilerplate-boot-api` 모듈 또는 `adapter-input-api` 모듈**에만 위치한다.
+- `@ControllerAdvice`(GlobalExceptionHandler)는 **`boilerplate-boot` 모듈 또는 `adapter-input-api` 모듈**에만 위치한다.
 - `ErrorCode` enum, `ErrorResponse`(RFC 9457 Problem Details 호환)는 `adapter-input-*` 모듈에 위치한다.
 - MUST NOT: `ErrorCode`, `ErrorResponse`를 Domain 또는 Application 계층에 위치시킨다.
 

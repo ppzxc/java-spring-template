@@ -567,8 +567,8 @@ class EventTranslatorTest {
 | `{bc}-adapter-input-event` | `{Subject}EventHandlerTest.java` | @ApplicationModuleTest |
 | `{bc}-adapter-output-persist` | `{Subject}PersistenceAdapterTest.java` | Testcontainers |
 | `{bc}-adapter-output-external` | `{Subject}ApiAdapterTest.java` | WireMock |
-| `boilerplate-boot-api` | `ModulithStructureTest.java` | ApplicationModules |
-| `boilerplate-boot-api` | `{Flow}E2ETest.java` | RestTestClient |
+| `boilerplate-boot` | `ModulithStructureTest.java` | ApplicationModules |
+| `boilerplate-boot` | `{Flow}E2ETest.java` | RestTestClient |
 
 ---
 

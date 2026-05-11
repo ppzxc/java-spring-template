@@ -74,7 +74,7 @@ MUST: 모든 모듈은 프로젝트명을 접두어로 공유한다.
 - `configuration`
 
 BC에 속하지 않는 공유 모듈:
-- `{project}-boot-api` — 전체 조립, 단일 배포 JAR
+- `{project}-boot` — 전체 조립, 단일 배포 JAR (Spring Boot 진입점)
 - `{project}-shared-event` — Published Language (BC 간 이벤트 계약)
 
 ## DDL 파일 네이밍

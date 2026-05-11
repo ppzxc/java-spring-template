@@ -33,10 +33,10 @@ jobs:
 
       # Gate 4: Modulith 구조 검증 + ArchUnit
       - name: Architecture Verification
-        run: ./gradlew :boilerplate-boot-api:test --tests "*ModulithStructureTest*" --tests "*ArchitectureTest*" --no-daemon
+        run: ./gradlew :boilerplate-boot:test --tests "*ModulithStructureTest*" --tests "*ArchitectureTest*" --no-daemon
 
       # Gate 5: 보안 취약점 스캔 (CVSS 7.0+ 시 실패)
       - name: Security Scan (OWASP)
-        run: ./gradlew :boilerplate-boot-api:dependencyCheckAnalyze --no-daemon
+        run: ./gradlew :boilerplate-boot:dependencyCheckAnalyze --no-daemon
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
