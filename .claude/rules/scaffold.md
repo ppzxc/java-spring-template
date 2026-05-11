@@ -490,7 +490,23 @@ Phase 3: V{n+1}__drop_old_column.sql
 ## 신규 BC 모듈 초기화 체크리스트
 
 새 BC를 추가할 때 아래 순서로 Gradle 모듈을 생성하고 등록한다.
-**구현 전 전략적 설계 완료 필수 (strategic-design.md 참조).**
+
+### Step 0: DDD 5단계 모델링 게이트
+
+MUST: Gradle 모듈 생성(Step 1) 전에 반드시 `strategic-design.md Step 1~5`를 완료한다.
+
+체크리스트:
+- [ ] `docs/ddd/bounded-context-{bc}.md` §1 Domain 작성됨 (비즈니스 범위, Subdomain 유형, DDD 깊이)
+- [ ] `docs/ddd/bounded-context-{bc}.md` §2 UL 표 작성됨 (다른 BC와 용어 충돌 없음)
+- [ ] `docs/ddd/bounded-context-{bc}.md` §3 Entity & VO 식별됨 (Entity vs VO 결정 기준 표 적용)
+- [ ] `docs/ddd/bounded-context-{bc}.md` §4 Aggregate & Root 설계됨 (4역할 확인, 1 TX = 1 Aggregate 설계)
+- [ ] `docs/ddd/bounded-context-{bc}.md` §5 BC 경계 + 통합 패턴 결정됨
+- [ ] `docs/ddd/context-map.md` §1 Subdomain 표 + §2 다이어그램 + §5 모듈 매핑 갱신됨
+- [ ] (필요 시) ADR 작성됨
+
+MUST: 위 7개 항목이 모두 충족되어야 Step 1(디렉토리 구조 생성)로 진행한다.
+
+---
 
 ### Step 1: 디렉토리 구조
 
@@ -596,11 +612,10 @@ Expected: BUILD SUCCESSFUL
 
 ### Step 7: `docs/ddd/` 산출물 갱신 (MUST)
 
-새 BC 추가 시 다음 4개 파일을 모두 갱신한다 (`context-map-pointer.md` §3 참조):
+새 BC 추가 시 다음 3개 파일을 모두 갱신한다 (`context-map-pointer.md` §4 참조):
 
-- [ ] `docs/ddd/context-map.md` — §1 Subdomain 분류 표에 행 추가, §2 다이어그램에 BC + 관계 추가
-- [ ] `docs/ddd/ubiquitous-language-{bc}.md` — 신규 파일 작성 (`ubiquitous-language-identity.md` 구조 참조)
-- [ ] `docs/ddd/module-bc-mapping.md` — Step 1~6에서 추가한 Gradle 모듈 행 추가
+- [ ] `docs/ddd/bounded-context-{bc}.md` — 신규 파일 작성 (5섹션: §1 Domain, §2 UL, §3 Entity·VO, §4 Aggregate, §5 BC 경계). `bounded-context-identity.md` 구조 참조.
+- [ ] `docs/ddd/context-map.md` — §1 Subdomain 분류 표에 행 추가, §2 다이어그램에 BC + 관계 추가, §5 모듈 매핑에 Gradle 모듈 행 추가
 - [ ] `docs/ddd/strategic-design-changelog.md` — 날짜, 변경 유형, 내용 기록
 
 ---

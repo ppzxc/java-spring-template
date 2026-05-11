@@ -138,6 +138,17 @@ public static User create(String name, String email) { ... }
 public static User create(UserName name, Email email) { ... }
 ```
 
+### Entity vs VO 결정 기준
+
+| 기준 | Entity | Value Object |
+|---|---|---|
+| 식별 방식 | ID로 구분 | 모든 속성 값으로 구분 |
+| 가변성 | 상태가 변할 수 있음 (행위 메서드로) | 불변 (`record`, 변경 시 새 인스턴스) |
+| 동등성 | ID 동일 시 동일 객체 (`equals/hashCode`는 ID 기반) | 모든 속성 동일 시 동일 객체 |
+| 생명주기 | 생성/변경/소멸 추적 | 생명주기 없음 |
+| 본 프로젝트 표현 | `final class` + `private` 생성자 | `record` + Compact Constructor |
+| 예시 | `User`, `Order`, `Account` | `Email`, `UserName`, `UserId` |
+
 ---
 
 ## 4. Aggregate 생명주기 (D-8, D-9)
@@ -157,6 +168,7 @@ public static User create(UserName name, Email email) { ... }
 - MUST NOT: `new` 키워드로 외부에서 Aggregate Root를 직접 생성한다.
 - MUST NOT: `reconstitute()`에서 이벤트를 발행한다.
 - MUST: Aggregate Root 클래스에 `final` 키워드를 붙인다.
+- MUST: 두 Entity 인스턴스의 ID가 동일하면 동일 객체로 간주한다 (`equals/hashCode`는 ID 기반).
 
 ```java
 public final class User {
@@ -228,6 +240,15 @@ public final class Order {
     private final UserId userId;   // ID 참조만 허용
 }
 ```
+
+### Aggregate Root 4대 역할
+
+| 역할 | 책임 | 본 프로젝트 강제 수단 |
+|---|---|---|
+| 유일 진입점 | 외부는 Root를 통해서만 내부 Entity 접근 | 내부 Entity의 `create()`/`reconstitute()`를 package-private으로 선언 |
+| 일관성 경계 | Aggregate 내부 불변식 보장 | Root 행위 메서드 내부에서만 상태 변경 |
+| 도메인 이벤트 발행 | 상태 변경 시 `registerEvent()` | `pullDomainEvents()` 수거 패턴 (AD-3) |
+| 외부 참조 ID 전용 | 다른 Aggregate는 ID로만 참조 | `Set<RoleId>` 패턴 (D-9) |
 
 ### Aggregate 내부 Entity 접근 제어
 
