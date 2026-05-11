@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 class JwtRequestContextFilterTest {
 
+  private static final Instant NOW = Instant.parse("2026-01-15T10:00:00Z");
   private final JwtRequestContextFilter filter = new JwtRequestContextFilter();
 
   @AfterEach
@@ -62,8 +63,8 @@ class JwtRequestContextFilterTest {
             .subject(UUID.randomUUID().toString())
             .claim("scope", "")
             .header("alg", "HS256")
-            .issuedAt(Instant.now())
-            .expiresAt(Instant.now().plusSeconds(3600))
+            .issuedAt(NOW)
+            .expiresAt(NOW.plusSeconds(3600))
             .build(); // tid 클레임 의도적으로 누락
     SecurityContextHolder.getContext()
         .setAuthentication(new JwtAuthenticationToken(jwt, List.of()));
@@ -113,8 +114,8 @@ class JwtRequestContextFilterTest {
             .subject(subject)
             .claim("scope", scope)
             .header("alg", "HS256")
-            .issuedAt(Instant.now())
-            .expiresAt(Instant.now().plusSeconds(3600));
+            .issuedAt(NOW)
+            .expiresAt(NOW.plusSeconds(3600));
     if (tid != null) {
       builder.claim("tid", tid);
     }
