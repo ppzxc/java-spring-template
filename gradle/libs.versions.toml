@@ -5,7 +5,7 @@ org-springframework-modulith = "2.0.6"
 com-diffplug-spotless = "8.4.0"
 org-openrewrite-rewrite = "7.30.0"
 com-fizzpod-lefthook = "0.4.0"
-com-google-cloud-tools-jib = "3.4.4"
+com-google-cloud-tools-jib = "3.5.3"
 net-ltgt-errorprone = "5.1.0"
 com-google-protobuf-plugin = "0.9.6"
 
