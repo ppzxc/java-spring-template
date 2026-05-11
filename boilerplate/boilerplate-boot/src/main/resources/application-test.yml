@@ -1,3 +1,7 @@
+security:
+  jwt:
+    hmac-secret: test-jwt-secret-for-testing-purposes-only-not-used-in-production
+
 spring:
   docker:
     compose:

@@ -4,6 +4,10 @@ plugins {
   id("boot-conventions")
 }
 
+tasks.withType<Test>().configureEach {
+  systemProperty("spring.profiles.active", "test")
+}
+
 dependencies {
   implementation(project(":boilerplate-shared-event"))
   implementation(project(":boilerplate-shared-security"))

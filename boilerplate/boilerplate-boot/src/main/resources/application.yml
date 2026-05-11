@@ -1,7 +1,7 @@
 security:
   jwt:
     jwk-set-uri: ${JWT_JWK_SET_URI:}
-    hmac-secret: ${JWT_HMAC_SECRET:dev-secret-change-me-in-production-min-256-bits}
+    hmac-secret: ${JWT_HMAC_SECRET}
 
 spring:
   application:
