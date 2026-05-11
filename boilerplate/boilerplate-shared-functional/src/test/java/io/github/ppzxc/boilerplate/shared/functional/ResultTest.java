@@ -13,10 +13,11 @@ class ResultTest {
     Result<String, Integer> result = Result.success("ok");
 
     assertThat(result).isInstanceOf(Result.Success.class);
-    String value = switch (result) {
-      case Result.Success<String, Integer>(var v) -> v;
-      case Result.Failure<String, Integer>(var e) -> null;
-    };
+    String value =
+        switch (result) {
+          case Result.Success<String, Integer>(var v) -> v;
+          case Result.Failure<String, Integer>(var e) -> null;
+        };
     assertThat(value).isEqualTo("ok");
   }
 
@@ -25,10 +26,11 @@ class ResultTest {
     Result<String, Integer> result = Result.failure(42);
 
     assertThat(result).isInstanceOf(Result.Failure.class);
-    Integer error = switch (result) {
-      case Result.Success<String, Integer>(var v) -> null;
-      case Result.Failure<String, Integer>(var e) -> e;
-    };
+    Integer error =
+        switch (result) {
+          case Result.Success<String, Integer>(var v) -> null;
+          case Result.Failure<String, Integer>(var e) -> e;
+        };
     assertThat(error).isEqualTo(42);
   }
 

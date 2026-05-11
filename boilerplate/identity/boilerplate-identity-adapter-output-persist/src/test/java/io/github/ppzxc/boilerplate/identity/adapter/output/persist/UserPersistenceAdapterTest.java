@@ -17,6 +17,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.postgresql.ds.PGSimpleDataSource;
 
 class UserPersistenceAdapterTest extends PureAdapterTestBase {
 
@@ -113,5 +114,4 @@ class UserPersistenceAdapterTest extends PureAdapterTestBase {
     assertThat(adapter.existsByEmail(new Email("exists@example.com"))).isTrue();
     assertThat(adapter.existsByEmail(new Email("notexists@example.com"))).isFalse();
   }
-
 }

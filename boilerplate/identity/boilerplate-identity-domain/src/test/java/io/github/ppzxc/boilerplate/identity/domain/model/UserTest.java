@@ -129,7 +129,9 @@ class UserTest extends DomainTestBase {
 
   @Test
   void assertCanLogin_SUSPENDED_상태_예외() {
-    var user = User.reconstitute(UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.SUSPENDED, NOW, NOW, 1L);
+    var user =
+        User.reconstitute(
+            UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.SUSPENDED, NOW, NOW, 1L);
 
     assertThatThrownBy(() -> user.assertCanLogin())
         .isInstanceOf(UserException.IneligibleStatusException.class);
@@ -137,7 +139,9 @@ class UserTest extends DomainTestBase {
 
   @Test
   void assertCanLogin_DEACTIVATED_상태_예외() {
-    var user = User.reconstitute(UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.DEACTIVATED, NOW, NOW, 1L);
+    var user =
+        User.reconstitute(
+            UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.DEACTIVATED, NOW, NOW, 1L);
 
     assertThatThrownBy(() -> user.assertCanLogin())
         .isInstanceOf(UserException.IneligibleStatusException.class);

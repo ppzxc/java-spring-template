@@ -153,8 +153,7 @@ class ArchitectureTest {
         .that()
         .resideInAPackage("..adapter.input..")
         .and()
-        .areNotAnnotatedWith(
-            "org.springframework.web.bind.annotation.RestControllerAdvice")
+        .areNotAnnotatedWith("org.springframework.web.bind.annotation.RestControllerAdvice")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("..domain..")
@@ -256,9 +255,7 @@ class ArchitectureTest {
         @Override
         public void check(JavaClass javaClass, ConditionEvents conditionEvents) {
           Set<String> fieldNames =
-              javaClass.getFields().stream()
-                  .map(f -> f.getName())
-                  .collect(Collectors.toSet());
+              javaClass.getFields().stream().map(f -> f.getName()).collect(Collectors.toSet());
           for (String required :
               Set.of("eventId", "eventType", "aggregateId", "occurredAt", "aggregateVersion")) {
             if (!fieldNames.contains(required)) {
@@ -301,8 +298,7 @@ class ArchitectureTest {
   // ── AD-3: ApplicationEventPublisher를 주입받는 PersistenceAdapter는 pullDomainEvents() 호출 필수 ──
   // VO-only 저장 어댑터(RefreshTokenPersistenceAdapter 등)는 ApplicationEventPublisher를 갖지 않으므로 제외
   private static final ArchCondition<JavaClass> CALL_PULL_DOMAIN_EVENTS_IF_HAS_PUBLISHER =
-      new ArchCondition<>(
-          "call pullDomainEvents() when ApplicationEventPublisher is injected") {
+      new ArchCondition<>("call pullDomainEvents() when ApplicationEventPublisher is injected") {
         @Override
         public void check(JavaClass javaClass, ConditionEvents conditionEvents) {
           boolean hasPublisher =
@@ -311,8 +307,7 @@ class ArchitectureTest {
                       f ->
                           f.getRawType()
                               .getName()
-                              .equals(
-                                  "org.springframework.context.ApplicationEventPublisher"));
+                              .equals("org.springframework.context.ApplicationEventPublisher"));
           if (!hasPublisher) {
             return;
           }
@@ -402,11 +397,6 @@ class ArchitectureTest {
   // ── A-10: application.dto 클래스는 record 강제 ──────────────────────────
   @Test
   void application_dto는_record_강제() {
-    classes()
-        .that()
-        .resideInAPackage("..application.dto..")
-        .should()
-        .beRecords()
-        .check(classes);
+    classes().that().resideInAPackage("..application.dto..").should().beRecords().check(classes);
   }
 }
