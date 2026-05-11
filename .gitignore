@@ -34,3 +34,5 @@ docs/specs/
 
 # Git worktrees
 .worktrees/
+.lefthook/
+lefthook-local.yml

@@ -18,7 +18,7 @@
 
 ```
 boilerplate/
-  boilerplate-boot-api/        # 전체 조립, Controller, Adapter, TX 프록시
+  boilerplate-boot/        # 전체 조립, Controller, Adapter, TX 프록시
   boilerplate-shared-event/    # BC 간 Integration Event (Published Language)
   boilerplate-shared-security/ # 공통 보안 설정
   boilerplate-test-support/    # 테스트 픽스처 공용 인프라
@@ -39,7 +39,7 @@ docker compose up -d
 ./gradlew build --no-daemon
 
 # 애플리케이션 실행
-./gradlew :boilerplate-boot-api:bootRun --no-daemon
+./gradlew :boilerplate-boot:bootRun --no-daemon
 ```
 
 ## CI/CD

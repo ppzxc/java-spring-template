@@ -33,7 +33,7 @@ CI/CD 핵심 정책 — 항상 로드.
 ## 2. 보안 스캔 설정
 
 ```kotlin
-// boilerplate-boot-api/build.gradle.kts
+// boilerplate-boot/build.gradle.kts
 plugins {
     id("org.owasp.dependencycheck") version "12.x.x"  // libs.versions.toml에서 최신 버전 확인
 }
@@ -105,7 +105,7 @@ Docker 파일 없이 OCI 이미지를 빌드. CI/CD 파이프라인에서 Gradle
 > 근거: ADR-0017
 
 ```kotlin
-// boilerplate-boot-api/build.gradle.kts
+// boilerplate-boot/build.gradle.kts
 plugins {
     id("com.google.cloud.tools.jib") version "3.x.x"  // libs.versions.toml에서 최신 버전 확인
 }
@@ -143,7 +143,7 @@ jib {
 ```yaml
 # .github/workflows/cd.yml (일부)
 - name: Build and push image
-  run: ./gradlew :boilerplate-boot-api:jib
+  run: ./gradlew :boilerplate-boot:jib
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -267,7 +267,7 @@ jobs:
         run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
 
       - name: Build image and push
-        run: ./gradlew :boilerplate-boot-api:jib -Pversion=${{ steps.version.outputs.version }} --no-daemon
+        run: ./gradlew :boilerplate-boot:jib -Pversion=${{ steps.version.outputs.version }} --no-daemon
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -9,6 +9,6 @@ pre-commit:
 pre-push:
   jobs:
     - name: unit-tests
-      run: ./gradlew test -x :boilerplate-boot-api:test --no-daemon
+      run: ./gradlew test -x :boilerplate-boot:test --no-daemon
     - name: archunit
-      run: ./gradlew :boilerplate-boot-api:test --tests "*ArchitectureTest*" --no-daemon
+      run: ./gradlew :boilerplate-boot:test --tests "*ArchitectureTest*" --no-daemon

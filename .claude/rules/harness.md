@@ -47,7 +47,7 @@ implementation("org.springframework.boot:spring-boot-starter-json")
 ### `boot` 라벨
 
 ```kotlin
-// boilerplate-boot-api/build.gradle.kts
+// boilerplate-boot/build.gradle.kts
 label("java", "spring", "boot")
 // BootJar 태스크 활성화
 ```
@@ -96,12 +96,12 @@ compileJava → processResources → classes
 ## 3. ArchUnit 검증 규칙 위치
 
 ```
-boilerplate-boot-api/src/test/java/.../architecture/
+boilerplate-boot/src/test/java/.../architecture/
     ArchitectureTest.java          # 의존 방향 + 금지 import
     ModulithStructureTest.java     # ApplicationModules.verify()
 ```
 
-- MUST: ArchUnit 테스트는 `boilerplate-boot-api` 모듈에 위치한다.
+- MUST: ArchUnit 테스트는 `boilerplate-boot` 모듈에 위치한다.
 - MUST: `ModulithStructureTest.verify()` 를 CI에서 항상 실행한다.
 
 ### ArchUnit 핵심 규칙 목록

@@ -15,7 +15,7 @@
 ## 모듈 구조
 
 현재 모듈:
-- `boilerplate-boot-api`: 전체 조립. Controller, PersistenceAdapter, TX 프록시.
+- `boilerplate-boot`: 전체 조립. Controller, PersistenceAdapter, TX 프록시.
 - `boilerplate-shared-event`: BC 간 Integration Event 계약 (Published Language). 순수 Java record.
 - `boilerplate-shared-security`: 공통 보안 설정 (JWT Filter 등).
 - `boilerplate-test-support`: 테스트 픽스처 공용 인프라 (DomainTestBase, Testcontainers Singleton 등).

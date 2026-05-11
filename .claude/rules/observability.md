@@ -28,7 +28,7 @@ alwaysApply: true
 ### 의존성
 
 ```kotlin
-// boilerplate-boot-api/build.gradle.kts
+// boilerplate-boot/build.gradle.kts
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-opentelemetry")
     implementation("org.springframework.boot:spring-boot-starter-actuator")

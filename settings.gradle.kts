@@ -42,4 +42,4 @@ module(name = ":boilerplate-audit-adapter-output-persist", path = "boilerplate/a
 module(name = ":boilerplate-audit-configuration",          path = "boilerplate/audit/boilerplate-audit-configuration")
 
 // ── Apps (실행 가능한 애플리케이션) ────────────────────────────────────
-module(name = ":boilerplate-boot-api", path = "boilerplate/boilerplate-boot-api")
+module(name = ":boilerplate-boot", path = "boilerplate/boilerplate-boot")
