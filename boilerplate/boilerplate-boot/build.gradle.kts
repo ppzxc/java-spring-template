@@ -28,6 +28,7 @@ dependencies {
   runtimeOnly(libs.org.flywaydb.flyway.database.postgresql)
   runtimeOnly(libs.org.postgresql.postgresql)
   testImplementation(libs.org.springframework.modulith.core)
+  testImplementation(libs.org.springframework.modulith.test)
   testImplementation(libs.org.springframework.security.test)
   testImplementation(project(":boilerplate-test-support"))
   testImplementation(libs.org.awaitility)

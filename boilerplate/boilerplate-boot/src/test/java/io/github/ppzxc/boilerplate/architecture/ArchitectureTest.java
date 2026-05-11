@@ -139,11 +139,15 @@ class ArchitectureTest {
   }
 
   // ── AD-1: adapter.input → domain 직접 참조 금지 (model/exception/event/service 전체) ──
+  // 예외: @RestControllerAdvice 예외 핸들러 — adapter.md §8에서 adapter-input-api 배치를 허용
   @Test
   void adapter_input_domain_직접_참조_금지() {
     noClasses()
         .that()
         .resideInAPackage("..adapter.input..")
+        .and()
+        .areNotAnnotatedWith(
+            "org.springframework.web.bind.annotation.RestControllerAdvice")
         .should()
         .dependOnClassesThat()
         .resideInAPackage("..domain..")

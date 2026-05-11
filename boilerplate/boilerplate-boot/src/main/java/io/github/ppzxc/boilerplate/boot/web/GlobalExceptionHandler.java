@@ -1,11 +1,8 @@
 package io.github.ppzxc.boilerplate.boot.web;
 
-import io.github.ppzxc.boilerplate.identity.application.port.output.OptimisticLockException;
-import io.github.ppzxc.boilerplate.identity.domain.exception.UserException;
 import io.github.ppzxc.boilerplate.shared.AccessDeniedException;
 import jakarta.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import org.slf4j.MDC;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-/** RFC 9457 problem+json 전역 예외 변환 핸들러 (AIP-193). boot 모듈에 위치하여 전체 BC 예외에 접근 가능. */
+/** RFC 9457 problem+json 전역 예외 변환 핸들러 (adapter.md §8). BC별 예외는 각 BC의 adapter-input-api에 위치. */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -24,60 +21,6 @@ public class GlobalExceptionHandler {
   public ProblemDetail handleNoSuchElement(NoSuchElementException ex, HttpServletRequest req) {
     return problem(
         HttpStatus.NOT_FOUND, "Not Found", "NOT_FOUND", msg(ex, "Resource not found"), req);
-  }
-
-  @ExceptionHandler(UserException.NotFoundException.class)
-  public ProblemDetail handleNotFound(UserException.NotFoundException ex, HttpServletRequest req) {
-    return problem(
-        HttpStatus.NOT_FOUND, "User Not Found", "USER_NOT_FOUND", msg(ex, "User not found"), req);
-  }
-
-  @ExceptionHandler(UserException.AlreadyExistsException.class)
-  public ProblemDetail handleAlreadyExists(
-      UserException.AlreadyExistsException ex, HttpServletRequest req) {
-    return problem(
-        HttpStatus.CONFLICT,
-        "Conflict",
-        "USER_ALREADY_EXISTS",
-        msg(ex, "User already exists"),
-        req);
-  }
-
-  @ExceptionHandler(UserException.AlreadySuspendedException.class)
-  public ProblemDetail handleAlreadySuspended(
-      UserException.AlreadySuspendedException ex, HttpServletRequest req) {
-    var p =
-        problem(
-            HttpStatus.UNPROCESSABLE_ENTITY,
-            "Unprocessable Entity",
-            "USER_ALREADY_SUSPENDED",
-            msg(ex, "User is already suspended"),
-            req);
-    p.setProperty(
-        "details",
-        List.of(new FieldViolation("status", "User is already suspended", "ALREADY_SUSPENDED")));
-    return p;
-  }
-
-  @ExceptionHandler(UserException.AlreadyDeactivatedException.class)
-  public ProblemDetail handleAlreadyDeactivated(
-      UserException.AlreadyDeactivatedException ex, HttpServletRequest req) {
-    return problem(
-        HttpStatus.UNPROCESSABLE_ENTITY,
-        "Unprocessable Entity",
-        "USER_ALREADY_DEACTIVATED",
-        msg(ex, "User is already deactivated"),
-        req);
-  }
-
-  @ExceptionHandler(OptimisticLockException.class)
-  public ProblemDetail handleOptimisticLock(OptimisticLockException ex, HttpServletRequest req) {
-    return problem(
-        HttpStatus.PRECONDITION_FAILED,
-        "Precondition Failed",
-        "ETAG_MISMATCH",
-        "ETag mismatch: resource was modified concurrently",
-        req);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
