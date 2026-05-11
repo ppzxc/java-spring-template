@@ -13,28 +13,47 @@ alwaysApply: true
 
 ## 1. 신규 BC 추가 파이프라인
 
-신규 BC를 추가하기 전에 반드시 아래 6단계를 순서대로 수행한다. **구현(scaffold.md) 시작 전에 완료**한다.
+신규 BC를 추가하기 전에 반드시 아래 7단계를 순서대로 수행한다. **구현(scaffold.md §Step 0) 시작 전에 완료**한다.
+각 단계 산출물은 `bounded-context-{bc}.md` 해당 섹션에 기록한다.
 
 ```
-[Step 1] Subdomain 분류
+[Step 1] 도메인 탐구 (Domain Discovery)
+     산출물: bounded-context-{bc}.md §1 Domain
+     활동: 비즈니스 범위, 핵심 책임, Subdomain 유형, DDD 깊이 결정
      ↓
-[Step 2] Ubiquitous Language(UL) 정의
+[Step 2] Ubiquitous Language(UL) 수립
+     산출물: bounded-context-{bc}.md §2 Ubiquitous Language
+     강제: 다른 BC의 bounded-context-*.md §2와 용어 충돌 검사 필수
      ↓
-[Step 3] Context Map 업데이트
+[Step 3] Entity & Value Object 식별
+     산출물: bounded-context-{bc}.md §3 Entity & Value Object
+     강제: Entity vs VO 결정 기준 표 (domain.md) 적용
      ↓
-[Step 4] DDD 깊이 결정
+[Step 4] Aggregate & Aggregate Root 설계
+     산출물: bounded-context-{bc}.md §4 Aggregate & Aggregate Root
+     강제: Aggregate Root 4역할 (유일 진입점/일관성 경계/이벤트 발행/ID 참조) 확인
+           1 TX = 1 Aggregate 원칙 설계
      ↓
-[Step 5] ADR 작성 (중요한 결정 시)
+[Step 5] Bounded Context 확정 + Subdomain 분류 + 통합 패턴 결정
+     산출물: bounded-context-{bc}.md §5 + context-map.md §1, §2, §5 갱신
+     강제: Subdomain (Core/Supporting/Generic) 판단 + 통합 패턴 (ACL/Conformist/OHS) 결정
      ↓
-[Step 6] scaffold.md 패턴으로 구현 시작
+[Step 6] ADR 작성 (중요한 결정 시)
+     대상: Subdomain 분류 / BC 경계 / 통합 패턴 / DDD 깊이 중 하나라도 결정한 경우
+     ↓
+[Step 7] scaffold.md §Step 0 DDD 게이트 확인 후 구현 시작
 ```
+
+- MUST: Step 1 완료 전에 Step 2로 진행하지 않는다.
+- MUST: Step 5 완료 전에 scaffold.md §Step 0 체크리스트 통과 없이 Gradle 모듈을 생성하지 않는다.
 
 ---
 
-## 2. Step 1: Subdomain 분류
+## 2. Step 1: 도메인 탐구 — Subdomain 분류
 
-- MUST: Subdomain 분류 시작 전에 `docs/ddd/context-map.md`를 먼저 읽는다.
+- MUST: 도메인 탐구 시작 전에 `docs/ddd/context-map.md`와 기존 `docs/ddd/bounded-context-*.md §1`을 읽는다.
 - MUST: 기존 BC들의 Subdomain 유형을 파악하여 일관성을 유지한다.
+- MUST: 탐구 결과를 `bounded-context-{bc}.md §1 Domain`에 기록한다.
 
 질문: "이 문제 영역이 비즈니스에서 어떤 위치를 차지하는가?"
 
@@ -55,26 +74,29 @@ alwaysApply: true
 
 ---
 
-## 3. Step 2: Ubiquitous Language(UL) 정의
+## 3. Step 2: Ubiquitous Language(UL) 수립
 
 - MUST: 도메인 전문가(PO, 기획자)와 함께 핵심 용어(명사, 동사) 목록을 만든다.
 - MUST: UL 용어는 코드(클래스명, 메서드명, 변수명)에 그대로 반영한다.
 - MUST NOT: 기술 용어("CRUD", "Entity", "Record")로 도메인 개념을 대체한다.
 - MUST: UL 충돌 발생 시(같은 단어, 다른 의미) → Context 경계가 잘못된 신호. 경계 재검토.
+- MUST: UL 결과를 `bounded-context-{bc}.md §2 Ubiquitous Language`에 기록한다.
+
+UL 충돌 검사: 신규 용어 정의 전 `docs/ddd/bounded-context-*.md §2` 모든 파일을 읽는다.
 
 UL 문서화 형식:
 ```markdown
-## {BC명} Ubiquitous Language
+## §2 Ubiquitous Language
 
-| 용어(한국어) | 용어(영어 코드명) | 정의 | 유사 용어와의 차이 |
-|-------------|----------------|------|-----------------|
+| 용어(한국어) | 코드 식별자 | 정의 | 유사 용어와의 차이 |
+|------------|-----------|------|-----------------|
 | 사용자 | User | 서비스에 가입한 실제 사람 | Member와 다름 — Member는 팀 소속 관계 |
 | 팀원 | Member | 특정 팀에 속한 User-Team 관계 | User 자체가 아님 |
 ```
 
 ---
 
-## 4. Step 3: Context Map 업데이트
+## 4. Step 5: Bounded Context 확정 + Context Map 업데이트
 
 ```
 [BC 간 관계 유형]
@@ -95,14 +117,13 @@ Upstream/Downstream (U/D):
 - MUST: BC 간 통신은 항상 Integration Event(shared-event)를 통한다. 직접 도메인 모델 공유 금지.
 - MUST: Context Map은 `docs/ddd/context-map.md`에 ASCII 다이어그램으로 유지한다.
 - MUST: 신규 BC 추가 시 `docs/ddd/` 산출물을 모두 갱신한다 (`context-map-pointer.md` §3 참조).
-   - `docs/ddd/context-map.md` — §1 Subdomain 표에 행 추가, §2 다이어그램에 BC + 관계 추가
-   - `docs/ddd/ubiquitous-language-{bc}.md` — 신규 파일 작성 (`ubiquitous-language-identity.md` 참조)
-   - `docs/ddd/module-bc-mapping.md` — 신규 Gradle 모듈 행 추가
+   - `docs/ddd/context-map.md` — §1 Subdomain 표에 행 추가, §2 다이어그램에 BC + 관계 추가, §5 모듈 매핑에 Gradle 모듈 행 추가
+   - `docs/ddd/bounded-context-{bc}.md` — 신규 파일 작성 (5섹션 템플릿, `bounded-context-identity.md` 참조)
    - `docs/ddd/strategic-design-changelog.md` — 변경 이력 기록
 
 ---
 
-## 5. Step 4: DDD 깊이 결정
+## 5. Step 1 & 5 참조: DDD 깊이 결정
 
 | BC 유형 | 적용 패턴 | 판단 기준 |
 |---------|----------|---------|
@@ -120,7 +141,7 @@ Upstream/Downstream (U/D):
 
 ---
 
-## 6. Step 5: ADR 작성 기준
+## 6. Step 6: ADR 작성 기준
 
 아래 결정 중 하나 이상이 포함되면 ADR을 작성한다:
 - Subdomain 분류 (Core/Supporting/Generic) 판단
@@ -133,19 +154,21 @@ Upstream/Downstream (U/D):
 
 ---
 
-## 7. Step 6: 구현 시작
+## 7. Step 7: 구현 시작
 
-전략적 설계 완료 후 `scaffold.md §Inside-Out 개발 원칙`에 따라 구현한다.
+전략적 설계 완료 후 `scaffold.md §Step 0 DDD 5단계 게이트`를 통과하고 `scaffold.md §Inside-Out 개발 원칙`에 따라 구현한다.
 
 ```
-전략적 설계 완료 체크리스트:
-- [ ] Subdomain 분류 결정됨
-- [ ] UL 핵심 용어 목록 작성됨
-- [ ] Context Map에 신규 BC 관계 추가됨
-- [ ] DDD 깊이 결정됨
-- [ ] 필요한 ADR 작성됨
+전략적 설계 완료 체크리스트 (scaffold.md §Step 0와 동일):
+- [ ] bounded-context-{bc}.md §1 Domain 작성됨
+- [ ] bounded-context-{bc}.md §2 UL 표 작성됨 (다른 BC와 용어 충돌 없음)
+- [ ] bounded-context-{bc}.md §3 Entity & VO 식별됨
+- [ ] bounded-context-{bc}.md §4 Aggregate & Root 설계됨
+- [ ] bounded-context-{bc}.md §5 BC 경계 + Subdomain + 통합 패턴 결정됨
+- [ ] context-map.md §1/§2/§5 갱신됨
+- [ ] (필요 시) ADR 작성됨
      ↓
-→ scaffold.md §새 Aggregate 생성 체크리스트 시작
+→ scaffold.md §Step 0 체크리스트 통과 → Gradle 모듈 생성 시작
 ```
 
 ---

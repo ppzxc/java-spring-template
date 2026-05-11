@@ -51,9 +51,8 @@
 
 `docs/ddd/` 디렉토리 — Living Document. BC 추가·변경 시 갱신.
 
-- `context-map.md` — Subdomain 분류 + BC 간 관계 다이어그램
-- `ubiquitous-language-{bc}.md` — BC별 UL 사전 (예: `ubiquitous-language-identity.md`)
-- `module-bc-mapping.md` — Gradle 모듈 ↔ BC ↔ 계층 매핑
+- `context-map.md` — Subdomain 분류 + BC 간 관계 다이어그램 + 모듈 매핑(§5)
+- `bounded-context-{bc}.md` — BC별 5섹션 문서 (Domain/UL/Entity·VO/Aggregate/BC 경계). 예: `bounded-context-identity.md`
 - `strategic-design-changelog.md` — 변경 이력
 
 BC 작업 시 워크플로우 강제 규칙 → `.claude/rules/context-map-pointer.md` 참조.
