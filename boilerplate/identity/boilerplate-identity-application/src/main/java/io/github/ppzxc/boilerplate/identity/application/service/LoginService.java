@@ -9,7 +9,6 @@ import io.github.ppzxc.boilerplate.identity.application.port.output.PasswordEnco
 import io.github.ppzxc.boilerplate.identity.application.port.output.SaveRefreshTokenPort;
 import io.github.ppzxc.boilerplate.identity.domain.exception.UserException;
 import io.github.ppzxc.boilerplate.identity.domain.model.Email;
-import io.github.ppzxc.boilerplate.identity.domain.model.UserStatus;
 import java.time.Clock;
 import java.time.Duration;
 
@@ -46,9 +45,7 @@ public class LoginService implements LoginUseCase {
       throw new UserException.InvalidCredentialException();
     }
 
-    if (user.status() != UserStatus.ACTIVE) {
-      throw new UserException.IneligibleStatusException(user.status().name());
-    }
+    user.assertCanLogin();
 
     var tokenSet = issueTokenPort.issue(user);
     saveRefreshTokenPort.save(user.id(), tokenSet.refreshToken());

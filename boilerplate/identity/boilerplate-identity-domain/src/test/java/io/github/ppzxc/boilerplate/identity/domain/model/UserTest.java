@@ -120,6 +120,30 @@ class UserTest extends DomainTestBase {
   }
 
   @Test
+  void assertCanLogin_ACTIVE_상태_정상() {
+    var user = User.create(NAME, EMAIL, PASSWORD, NOW);
+    user.pullDomainEvents();
+
+    user.assertCanLogin(); // 예외 없이 통과해야 함
+  }
+
+  @Test
+  void assertCanLogin_SUSPENDED_상태_예외() {
+    var user = User.reconstitute(UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.SUSPENDED, NOW, NOW, 1L);
+
+    assertThatThrownBy(() -> user.assertCanLogin())
+        .isInstanceOf(UserException.IneligibleStatusException.class);
+  }
+
+  @Test
+  void assertCanLogin_DEACTIVATED_상태_예외() {
+    var user = User.reconstitute(UserId.generate(), EMAIL, NAME, PASSWORD, NOW, UserStatus.DEACTIVATED, NOW, NOW, 1L);
+
+    assertThatThrownBy(() -> user.assertCanLogin())
+        .isInstanceOf(UserException.IneligibleStatusException.class);
+  }
+
+  @Test
   void reconstitute_이벤트_미발행() {
     var id = UserId.generate();
     var user = User.reconstitute(id, EMAIL, NAME, PASSWORD, NOW, UserStatus.ACTIVE, NOW, NOW, 5L);

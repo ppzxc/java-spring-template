@@ -73,6 +73,12 @@ public final class User {
     return new User(id, email, userName, credential, status, createdAt, updatedAt, version);
   }
 
+  public void assertCanLogin() {
+    if (this.status != UserStatus.ACTIVE) {
+      throw new UserException.IneligibleStatusException(this.status.name());
+    }
+  }
+
   public void suspend(Instant now) {
     Objects.requireNonNull(now, "now must not be null");
     if (this.status == UserStatus.SUSPENDED) {
