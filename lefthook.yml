@@ -1,14 +1,57 @@
+# Lefthook 2.x — 로컬 1차 방어선 (방어선 0)
+# 공식 문서: https://lefthook.dev/configuration/
+# CI는 이 검사들을 다시 실행함 — Lefthook의 목적은 "빠른 로컬 차단"
+min_version: 1.7.0
+assert_lefthook_installed: true
+
 pre-commit:
+  parallel: true
   jobs:
     - name: spotless-check
-      run: ./gradlew spotlessCheck --no-daemon
+      glob: "*.{java,kt,kts}"
+      run: ./gradlew spotlessCheck
+      skip:
+        - merge
+        - rebase
+      fail_text: |
+        ❌ Spotless 포맷 위반. 자동 수정: ./gradlew spotlessApply
+
     - name: checkstyle
       glob: "*.java"
-      run: ./gradlew checkstyleMain --no-daemon
+      run: ./gradlew checkstyleMain
+      skip:
+        - merge
+        - rebase
+      fail_text: |
+        ❌ Checkstyle 위반. build/reports/checkstyle/main.html 확인.
+
+commit-msg:
+  jobs:
+    - name: conventional-commits
+      run: |
+        head -1 "{1}" | grep -qE \
+          '^(feat|fix|refactor|perf|chore|build|ci|docs|test|style|revert)(\(.+\))?!?: .+$' \
+          || { printf '❌ Conventional Commits 형식 위반\n예: feat(identity): JWT 로그인 구현\n허용 타입: feat|fix|refactor|perf|chore|build|ci|docs|test|style|revert\n'; exit 1; }
+      skip:
+        - merge
+        - rebase
 
 pre-push:
+  parallel: true
   jobs:
     - name: unit-tests
-      run: ./gradlew test -x :boilerplate-boot:test --no-daemon
-    - name: archunit
-      run: ./gradlew :boilerplate-boot:test --tests "*ArchitectureTest*" --no-daemon
+      run: ./gradlew test -x :boilerplate-boot:test
+      skip:
+        - merge
+        - rebase
+      fail_text: |
+        ❌ 단위 테스트 실패. 푸시 전 수정 필요.
+
+    - name: arch-and-modulith
+      run: ./gradlew :boilerplate-boot:test --tests "*ArchitectureTest*" --tests "*ModulithStructureTest*"
+      skip:
+        - merge
+        - rebase
+      fail_text: |
+        ❌ ArchUnit / Modulith 구조 검증 실패.
+        의존 방향·금지 패턴·모듈 경계 점검 필요.
